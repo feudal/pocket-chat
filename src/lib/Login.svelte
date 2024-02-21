@@ -8,33 +8,37 @@
     await pb.collection("users").authWithPassword(username, password);
   }
 
-  async function signup() {
+  async function signUp() {
     try {
       const data = {
         username,
         password,
-        passordConfirm: password,
+        passwordConfirm: password,
       };
 
       const createdUser = await pb.collection("users").create(data);
+      await login();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function logout() {
+  async function signOut() {
     pb.authStore.clear();
   }
 </script>
 
 {#if $currentUser}
-  <p>Signed id as {$currentUser.username}</p>
+  <p>
+    Signed in as {$currentUser.username}
+    <button on:click={signOut}>Sign Out</button>
+  </p>
 {:else}
   <form on:submit|preventDefault>
-    <input type="text" bind:value={username} placeholder="Username" />
-    <input type="password" bind:value={password} placeholder="Password" />
+    <input placeholder="Username" type="text" bind:value={username} />
 
+    <input placeholder="Password" type="password" bind:value={password} />
+    <button on:click={signUp}>Sign Up</button>
     <button on:click={login}>Login</button>
-    <button on:click={signup}>Signup</button>
   </form>
 {/if}
