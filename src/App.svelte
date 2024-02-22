@@ -4,7 +4,7 @@
   import { currentUser } from "./lib/pocketbase";
 </script>
 
-<h1>Pocketchat</h1>
+<h1>Pocketchat 444</h1>
 
 <Login />
 
